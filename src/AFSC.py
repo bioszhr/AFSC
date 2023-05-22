@@ -154,9 +154,11 @@ class Neighbor(nn.Module):
         
         similar = I.reshape(-1).tolist()
         index = np.repeat(range(I.shape[0]), I.shape[1])
-        
         assert len(similar) == len(index)
-        indices = torch.tensor([index, similar]).to(self.device)
+        if type(index) is np.ndarray:
+            indices = torch.tensor(np.array([index, similar])).to(self.device)
+        else:
+            indices = torch.tensor([index, similar]).to(self.device)
         result = torch.sparse_coo_tensor(indices, torch.ones_like(I.reshape(-1)), [I.shape[0], I.shape[0]])
 
         return result

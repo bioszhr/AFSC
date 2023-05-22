@@ -14,9 +14,6 @@ torch.cuda.manual_seed_all(0)
 
 
 def large_mat_mul(input_a, input_b, batch=32):
-    """
-    Large Matrix Slicing Operations.
-    """
     m = input_a.shape[0]
     block_m = math.floor(m / batch)
     out = []
@@ -34,9 +31,6 @@ def large_mat_mul(input_a, input_b, batch=32):
 
 
 def mat_mul(input_a, input_b):
-    """
-    Refactored matmul operation.
-    """
     m = input_a.shape[0]
     if m > 100000:
         out = large_mat_mul(input_a, input_b)
@@ -50,10 +44,6 @@ def get_approximate_basis(matrix: np.ndarray,
                           q=6,
                           niter=2,
                           ):
-    """
-       Return tensor Q with k orthonormal columns \
-       such that 'Q Q^H matrix` approximates `matrix`.
-    """
     niter = 2 if niter is None else niter
     _, n = matrix.shape[-2:]
 
@@ -69,32 +59,6 @@ def get_approximate_basis(matrix: np.ndarray,
 
 
 def pca(matrix: np.ndarray, k: int = None, niter: int = 2, norm: bool = False):
-    r"""
-    Perform a linear principal component analysis (PCA) on the matrix,
-    and will return the first k dimensionality-reduced features.
-
-    Args:
-      matrix(ndarray): Input features, shape:(B, F)
-      k(int): target dimension for dimensionality reduction
-      niter(int): the number of subspace iterations to conduct \
-      and it must be a nonnegative integer.
-      norm(bool): Whether the output is normalized
-
-    Return:
-        Tensor, Features after dimensionality reduction
-
-    Example:
-        >>> import numpy as np
-        >>> X = np.array([[-1, 1], [-2, -1], [-3, -2], [1, 1], [2, 1], [3, 2]])
-        >>> data = pca(X, 1)
-        >>> print(data)
-            [[ 0.33702252]
-            [ 2.22871406]
-            [ 3.6021826 ]
-            [-1.37346854]
-            [-2.22871406]
-            [-3.6021826 ]]
-    """
     if not isinstance(matrix, np.ndarray):
         raise TypeError("The matrix type is {},\
                         but it should be ndarray.".format(type(matrix)))
@@ -124,8 +88,8 @@ def pca(matrix: np.ndarray, k: int = None, niter: int = 2, norm: bool = False):
 
 def read_adata(file_fold,file_name):
     adata = sc.read_visium(file_fold, count_file=file_name, load_images=True)
-    adata.var_names_make_unique()
     adata.X = adata.X.toarray()
+    adata.var_names_make_unique()
     print(adata)
     return adata
 
@@ -173,7 +137,6 @@ def process_adata(adata,pca_dim=1000,k=50):
     return adata
 
 def prepare_data(adata,threshold):
-    #是否k邻居
     adj=adata.obsm['distance_k']
     adj[adj > threshold]=0
     adj_dis = adj.ravel()[np.flatnonzero(adj)]
@@ -185,7 +148,7 @@ def prepare_data(adata,threshold):
     indices = np.vstack((edge_index.row, edge_index.col)) # 我们真正需要的coo形式 
     edge_index = torch.LongTensor(indices) # PyG框架需要的
 
-    edge_attr = adj_dis        #不归一化
+    edge_attr = adj_dis     
     edge_attr = torch.tensor(edge_attr).float()
     data = torch_geometric.data.Data(edge_index=edge_index, edge_attr=edge_attr, x=adata.obsm["X_pca"], y = adata.obsm["label"],
                      neighbor_index=edge_index, neighbor_attr=edge_attr)
