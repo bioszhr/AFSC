@@ -172,12 +172,9 @@ def process_adata(adata,pca_dim=1000,k=50):
     print(adata)
     return adata
 
-def prepare_data(adata,need_k,threshold):
+def prepare_data(adata,threshold):
     #是否k邻居
-    if need_k == 0:
-        adj=adata.obsm["distance"]
-    else:
-        adj=adata.obsm['distance_k']
+    adj=adata.obsm['distance_k']
     adj[adj > threshold]=0
     adj_dis = adj.ravel()[np.flatnonzero(adj)]
 
