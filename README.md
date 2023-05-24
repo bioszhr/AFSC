@@ -9,8 +9,8 @@ Please ensure that all the libraries below are successfully installed:<br>
 -torch-geometric 1.7.0<br>
 -faiss 1.7.0<br>
 ## Run AFSC on the example data.
-If you wanna run datasets at spot resolution, e.g. the breast invasive carcinoma (BRCA), you should change the relevant path to your own file path, and run ***spot.ipynb***.<br>
-If you wanna run datasets at single-cell resolution, e.g. the mouse hypothalamic preoptic area obtained with MERFISH, you should change the relevant path to your own file path,, and run ***single-cell.ipynb***.
+If you wanna run datasets at spot resolution, e.g. **the breast invasive carcinoma (BRCA)**, you should change the relevant path to your own file path, and run ***spot.ipynb***.<br>
+If you wanna run datasets at single-cell resolution, e.g. **the mouse hypothalamic preoptic area obtained with MERFISH**, you should change the relevant path to your own file path,, and run ***single-cell.ipynb***.
 ### Output
 The output results will be stored in the dir ***results***.
 ### Datasets
