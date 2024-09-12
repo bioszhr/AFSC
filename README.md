@@ -1,7 +1,7 @@
 # AFSC: A self-supervised Augmentation-Free Spatial Clustering method based on contrastive learning for spatial transcriptomics
 ## Overview
 We propose a new self-supervised spatial clustering method, Augmentation-Free Spatial Clustering (AFSC), which integrates spatial information and gene expression to learn latent representations without negative pairs or data augmentation. We also introduce a clustering loss to guide the training along with the contrastive loss. Experiments on multiple datasets demonstrate that our method outperforms existing methods in self-supervised spatial clustering tasks. Furthermore, the learned representations can be used for various downstream tasks, including clustering, visualization, and trajectory inference.<br>
-![image](https://github.com/bioszhr/AFSC/blob/main/results/figures/Figure1.png)
+![image](https://github.com/bioszhr/AFSC/blob/main/results/figures/Figure 1.png)
 ## Requirements
 Please ensure that all the libraries below are successfully installed:<br>
 -Python 3.7<br>
